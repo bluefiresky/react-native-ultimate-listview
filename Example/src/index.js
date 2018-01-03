@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Alert, Dimensions, Platform, View } from 'react-native'
 import { Button, Header, Icon, Input, Item, Left, Right, Text } from 'native-base'
-import UltimateListView from 'react-native-ultimate-listview'
+import { UltimateListView } from 'react-native-ultimate-listview'
 // import { UltimateListView } from '../lib/index'
 import styles from './styles'
 import LoadingSpinner from './loadingSpinner'
@@ -22,15 +22,15 @@ export default class Example extends Component {
   onFetch = async (page = 1, startFetch, abortFetch) => {
     try {
       // This is required to determinate whether the first loading list is all loaded.
-      let pageLimit = 24
+      let pageLimit = 20
       if (this.state.layout === 'grid') pageLimit = 60
       const skip = (page - 1) * pageLimit
 
       // Generate dummy data
-      let rowData = Array.from({ length: pageLimit }, (value, index) => `item -> ${index + skip}`)
+      let rowData = Array.from({ length: 1 }, (value, index) => `item -> ${index + skip}`)
 
       // Simulate the end of the list if there is no more data returned from the server
-      if (page === 10) {
+      if (page === 3) {
         rowData = []
       }
 
@@ -114,6 +114,18 @@ export default class Example extends Component {
     <LoadingSpinner height={height * 0.2} text="loading..." />
   )
 
+  renderPaginationAllLoadedView = () => (
+    <View style={{flex:1, height:50, alignItems:'center', justifyContent:'center', backgroundColor:'lightskyblue'}}>
+      <Text style={{color:'#333333', fontSize:22}}>加载完了</Text>
+    </View>
+  )
+
+  renderEmptyView = () => (
+    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+      <Text style={{color:'#333333', fontSize:22}}>啥都没有啊</Text>
+    </View>
+  )
+
   render() {
     return (
       <View style={styles.container}>
@@ -125,32 +137,55 @@ export default class Example extends Component {
         </Header>
         <UltimateListView
           ref={ref => this.listView = ref}
-          key={this.state.layout} // this is important to distinguish different FlatList, default is numColumns
+          key={this.state.layout}
           onFetch={this.onFetch}
-          keyExtractor={(item, index) => `${index} - ${item}`} // this is required when you are using FlatList
-          refreshableMode="advanced" // basic or advanced
-
-          item={this.renderItem} // this takes three params (item, index, separator)
-          numColumns={this.state.layout === 'list' ? 1 : 3} // to use grid layout, simply set gridColumn > 1
-
-          // ----Extra Config----
+          keyExtractor={(item, index) => `${index} - ${item}`}
+          refreshableMode="advanced"
+          item={this.renderItem}
+          numColumns={1}
           displayDate
           header={this.renderHeader}
           paginationFetchingView={this.renderPaginationFetchingView}
-          // sectionHeaderView={this.renderSectionHeaderView}   //not supported on FlatList
-          // paginationFetchingView={this.renderPaginationFetchingView}
-          // paginationAllLoadedView={this.renderPaginationAllLoadedView}
-          // paginationWaitingView={this.renderPaginationWaitingView}
-          // emptyView={this.renderEmptyView}
-          // separator={this.renderSeparatorView}
-
-          // new props on v3.2.0
+          paginationFetchingView={this.renderPaginationFetchingView}
+          paginationAllLoadedView={this.renderPaginationAllLoadedView}
+          paginationWaitingView={this.renderPaginationWaitingView}
+          emptyView={this.renderEmptyView}
+          separator={this.renderSeparatorView}
           arrowImageStyle={{ width: 20, height: 20, resizeMode: 'contain' }}
           dateStyle={{ color: 'lightgray' }}
           refreshViewStyle={Platform.OS === 'ios' ? { height: 80, top: -80 } : { height: 80 }}
           refreshViewHeight={80}
+
         />
       </View>
     )
   }
 }
+
+// <UltimateListView
+//   ref={ref => this.listView = ref}
+//   key={this.state.layout} // this is important to distinguish different FlatList, default is numColumns
+//   onFetch={this.onFetch}
+//   keyExtractor={(item, index) => `${index} - ${item}`} // this is required when you are using FlatList
+//   refreshableMode="advanced" // basic or advanced
+//
+//   item={this.renderItem} // this takes three params (item, index, separator)
+//   numColumns={this.state.layout === 'list' ? 1 : 3} // to use grid layout, simply set gridColumn > 1
+//
+//   // ----Extra Config----
+//   // displayDate
+//   header={this.renderHeader}
+//   paginationFetchingView={this.renderPaginationFetchingView}
+//   // sectionHeaderView={this.renderSectionHeaderView}   //not supported on FlatList
+//   // paginationFetchingView={this.renderPaginationFetchingView}
+//   // paginationAllLoadedView={this.renderPaginationAllLoadedView}
+//   // paginationWaitingView={this.renderPaginationWaitingView}
+//   // emptyView={this.renderEmptyView}
+//   // separator={this.renderSeparatorView}
+//
+//   // new props on v3.2.0
+//   arrowImageStyle={{ width: 20, height: 20, resizeMode: 'contain' }}
+//   dateStyle={{ color: 'lightgray' }}
+//   refreshViewStyle={Platform.OS === 'ios' ? { height: 80, top: -80 } : { height: 80 }}
+//   refreshViewHeight={80}
+// />

@@ -2,7 +2,7 @@ package com.example.sky;
 
 import android.app.Application;
 
-import com.example.BuildConfig;
+import com.example.sky.BuildConfig;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
