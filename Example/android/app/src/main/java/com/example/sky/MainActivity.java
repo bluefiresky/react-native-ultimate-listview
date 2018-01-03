@@ -1,4 +1,4 @@
-package com.example;
+package com.example.sky;
 
 import com.facebook.react.ReactActivity;
 
