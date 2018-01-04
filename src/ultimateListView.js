@@ -8,7 +8,8 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
+  DeviceEventEmitter
 } from 'react-native'
 import RefreshableScrollView from './refreshableScrollView'
 
@@ -170,7 +171,7 @@ export default class UltimateListView extends Component {
   }
 
   onRefresh = () => {
-    console.log('onRefresh()')
+    // console.log('onRefresh()')
     if (this.mounted) {
       this.setState({
         isRefreshing: true
@@ -182,7 +183,7 @@ export default class UltimateListView extends Component {
 
   onPaginate = () => {
     if (this.state.paginationStatus !== PaginationStatus.allLoaded && !this.state.isRefreshing) {
-      console.log('onPaginate()')
+      // console.log('onPaginate()')
       this.setState({ paginationStatus: PaginationStatus.waiting })
       this.props.onFetch(this.getPage() + 1, this.postPaginate, this.endFetch)
     }
@@ -237,6 +238,7 @@ export default class UltimateListView extends Component {
 
   endFetch = () => {
     // console.log('endRefresh()');
+    DeviceEventEmitter.emit('EndRefresh');
     if (this.mounted) {
       this.setState({ isRefreshing: false })
       if (this.props.refreshableMode === 'advanced' && this._flatList._listRef._scrollRef.onRefreshEnd) {
