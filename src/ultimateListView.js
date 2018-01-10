@@ -237,7 +237,6 @@ export default class UltimateListView extends Component {
   }
 
   endFetch = () => {
-    // console.log('endRefresh()');
     DeviceEventEmitter.emit('EndRefresh');
     if (this.mounted) {
       this.setState({ isRefreshing: false })
@@ -279,6 +278,8 @@ export default class UltimateListView extends Component {
 
     if (this.props.refreshableMode === 'advanced') {
       this.endFetch()
+    }else {
+      DeviceEventEmitter.emit('EndRefresh');
     }
   }
 
