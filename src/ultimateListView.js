@@ -174,7 +174,7 @@ export default class UltimateListView extends Component {
     // console.log('onRefresh()')
     if (this.mounted) {
       this.setState({
-        isRefreshing: true
+        isRefreshing: false
       })
       this.setPage(1)
       this.props.onFetch(this.getPage(), this.postRefresh, this.endFetch)
