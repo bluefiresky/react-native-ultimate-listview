@@ -250,7 +250,10 @@ export default class UltimateListView extends Component {
     this.setPage(this.getPage() + 1)
     let mergedRows
     let paginationStatus
-    if (rows.length === 0 || rows.length < pageLimit) {
+    if (rows.length === 0) {
+      paginationStatus = PaginationStatus.allLoaded
+    } else if (rows.length < pageLimit){
+      mergedRows = this.getRows().concat(rows)
       paginationStatus = PaginationStatus.allLoaded
     } else {
       mergedRows = this.getRows().concat(rows)
