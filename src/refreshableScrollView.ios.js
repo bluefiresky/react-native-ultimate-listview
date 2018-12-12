@@ -195,7 +195,7 @@ export default class RefreshableScrollView extends ScrollView {
   renderSpinner() {
     if (this.state.refreshStatus === RefreshStatus.refreshing) {
       return (
-        <ActivityIndicator color={{color:this.props.refreshableTitleMainColor}} style={{ marginRight: 10,  }} />
+        <ActivityIndicator color={this.props.refreshableTitleMainColor} style={{ marginRight: 10,  }} />
       )
     }
     return (
